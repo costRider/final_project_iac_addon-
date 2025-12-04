@@ -1,0 +1,46 @@
+# envs/dev/values/argocd-values.yaml
+
+global:
+  domain: ""   # 나중에 도메인 붙일 거면 여기 쓸 수도 있음
+
+server:
+  # 1) 서비스는 ClusterIP로 내부 전용
+  service:
+    type: ClusterIP
+    port: 80
+
+  # 2) ALB Ingress 활성화
+  ingress:
+    enabled: true
+    ingressClassName: alb   # K8s 1.22+ 에서 ingressClassName 권장
+
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+      # 필요하면 HTTPS 로 바꿀 수 있음:
+      # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+      # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:...
+
+      # 보안 강화용(예: 특정 IP만 허용)
+      # alb.ingress.kubernetes.io/inbound-cidrs: "1.2.3.4/32,5.6.7.8/32"
+
+    hosts:
+      - argocd-dev.example.com   # 나중에 Route53 A 레코드 여기로 붙이면 됨
+    paths:
+      - /
+    pathType: Prefix
+
+  extraArgs:
+    - --insecure   # HTTPS termination을 ALB에서 한다면 이거 유지
+
+configs:
+  params:
+    server.insecure: "true"
+
+  # admin 비밀번호를 여기서 강제로 지정할 수도 있음
+  # (bcrypt 해시로 넣는 게 권장)
+  # secret:
+  #   argocdServerAdminPassword: "<bcrypt-hash>"
+  #   argocdServerAdminPasswordMtime: "2025-01-01T00:00:00Z"
