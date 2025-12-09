@@ -1,0 +1,32 @@
+name: Destroy EKS Addons
+
+on:
+  workflow_dispatch:   # 👈 필요할 때 수동으로 실행
+
+jobs:
+  destroy-addons:
+    runs-on: [self-hosted, mgmt]   # 👈 우리가 등록해 둔 mgmt EC2 runner 라벨
+
+    defaults:
+      run:
+        working-directory: ./envs/dev   # 👈 이 레포에서 terraform 실행하는 디렉토리로 맞춰줘
+
+    steps:
+      - name: Checkout addon repo
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.14.0"
+
+      # (선택) fmt/validate 같은 건 destroy에는 굳이 필요 없으니 생략해도 됨
+
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -input=false
+
+      - name: Terraform Destroy
+        run: |
+          terraform destroy -auto-approve -input=false
