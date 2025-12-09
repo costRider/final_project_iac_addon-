@@ -1,32 +1,26 @@
-name: Destroy EKS Addons
+name: Destroy EKS Mgmt Addons (LBC + ArgoCD)
 
 on:
-  workflow_dispatch:   # 👈 필요할 때 수동으로 실행
+  workflow_dispatch:  # 수동 실행
 
 jobs:
   destroy-addons:
-    runs-on: [self-hosted, mgmt]   # 👈 우리가 등록해 둔 mgmt EC2 runner 라벨
+    runs-on: [self-hosted, mgmt]   # MGMT EC2 Runner
 
+    # 여기 경로만 네 Terraform 루트에 맞춰 수정하면 됨
     defaults:
       run:
-        working-directory: ./envs/dev   # 👈 이 레포에서 terraform 실행하는 디렉토리로 맞춰줘
+        working-directory: ./envs/dev
 
     steps:
       - name: Checkout addon repo
         uses: actions/checkout@v4
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.14.0"
-
-      # (선택) fmt/validate 같은 건 destroy에는 굳이 필요 없으니 생략해도 됨
+      - name: Show terraform version (디버그용)
+        run: terraform -version
 
       - name: Terraform Init
-        run: |
-          terraform init \
-            -input=false
+        run: terraform init -input=false
 
       - name: Terraform Destroy
-        run: |
-          terraform destroy -auto-approve -input=false
+        run: terraform destroy -auto-approve -input=false
