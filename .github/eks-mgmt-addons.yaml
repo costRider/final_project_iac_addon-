@@ -1,0 +1,29 @@
+name: EKS Mgmt Addons (LBC + ArgoCD)
+
+on:
+  workflow_dispatch:         # 수동 실행 버튼
+  push:
+    paths:
+      - "envs/dev/**"        # dev 환경 관련 파일 변경 시 자동 실행
+    branches:
+      - main
+
+env:
+  AWS_REGION: ap-northeast-2
+  TF_DIR: envs/dev
+
+jobs:
+  deploy-addons:
+    runs-on: [self-hosted, mgmt]   # MGMT EC2에 설치된 runner만 사용
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Show AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Terraform Init
+        run: terraform -chdir=${{ env.TF_DIR }} init
+
+      - name: Terraform Apply
+        run: terraform -chdir=${{ env.TF_DIR }} apply -auto-approve
