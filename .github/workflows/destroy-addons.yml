@@ -10,7 +10,7 @@ jobs:
     # 여기 경로만 네 Terraform 루트에 맞춰 수정하면 됨
     defaults:
       run:
-        working-directory: ./envs/dev
+        working-directory: ./envs/dev/aws
 
     steps:
       - name: Checkout addon repo

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:         # 수동 실행 버튼
   push:
     paths:
-      - "envs/dev/**"        # dev 환경 관련 파일 변경 시 자동 실행
+      - "envs/dev/aws/**"        # dev 환경 관련 파일 변경 시 자동 실행
     branches:
       - main
 
