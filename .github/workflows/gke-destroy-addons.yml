@@ -1,4 +1,4 @@
-name: Destroy EKS Mgmt Addons (LBC + ArgoCD)
+name: Destroy GKE Mgmt Addons (LBC + ArgoCD)
 
 on:
   workflow_dispatch:  # 수동 실행
