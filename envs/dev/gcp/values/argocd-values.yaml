@@ -10,9 +10,10 @@ server:
     ingressClassName: gce
     annotations:
       kubernetes.io/ingress.class: "gce"
+      kubernetes.io/ingress.global-static-ip-name: "argocd-ip"
 
     hosts:
-      - argocd.136.110.154.85.nip.io   # <-- 여기만 바꿈
+      - argocd.136.110.154.85.nip.io   # ← 위에서 받은 IP
 
     paths:
       - /
