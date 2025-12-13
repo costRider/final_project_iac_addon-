@@ -13,7 +13,7 @@ env:
 
 jobs:
   deploy-addons:
-    runs-on: [self-hosted, mgmt]
+    runs-on: [self-hosted, mgmt, gcp]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

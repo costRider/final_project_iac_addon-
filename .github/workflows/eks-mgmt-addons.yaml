@@ -14,7 +14,7 @@ env:
 
 jobs:
   deploy-addons:
-    runs-on: [self-hosted, mgmt]   # MGMT EC2에 설치된 runner만 사용
+    runs-on: [self-hosted, mgmt, aws]   # MGMT EC2에 설치된 runner만 사용
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
