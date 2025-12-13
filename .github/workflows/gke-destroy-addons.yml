@@ -5,7 +5,7 @@ on:
 
 jobs:
   destroy-addons:
-    runs-on: [self-hosted, mgm, gcp]   # MGMT EC2 Runner
+    runs-on: [self-hosted, mgmt, gcp]   # MGMT EC2 Runner
 
     # 여기 경로만 네 Terraform 루트에 맞춰 수정하면 됨
     defaults:
