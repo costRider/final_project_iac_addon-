@@ -1,0 +1,18 @@
+server:
+  service:
+    type: ClusterIP
+
+  extraArgs:
+    - --insecure
+
+  ingress:
+    enabled: true
+    ingressClassName: gce
+    annotations:
+      kubernetes.io/ingress.class: "gce"
+    # 도메인 아직 없으면 임시 host로 두고, LB IP 뜬 후 hosts 파일로 테스트 가능
+    hosts:
+      - argocd.example.local
+    paths:
+      - /
+    pathType: Prefix
