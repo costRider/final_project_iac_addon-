@@ -10,9 +10,10 @@ server:
     ingressClassName: gce
     annotations:
       kubernetes.io/ingress.class: "gce"
-    # 도메인 아직 없으면 임시 host로 두고, LB IP 뜬 후 hosts 파일로 테스트 가능
+
     hosts:
-      - argocd.example.local
+      - argocd.136.110.154.85.nip.io   # <-- 여기만 바꿈
+
     paths:
       - /
     pathType: Prefix
