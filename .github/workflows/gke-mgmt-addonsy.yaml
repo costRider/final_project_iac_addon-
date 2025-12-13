@@ -1,0 +1,31 @@
+name: GKE Mgmt Addons (ESO + ArgoCD)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "envs/dev/gcp/**"
+    branches:
+      - main
+
+env:
+  TF_DIR: envs/dev/gcp
+
+jobs:
+  deploy-addons:
+    runs-on: [self-hosted, mgmt]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Show GCP identity
+        run: |
+          gcloud auth list
+          gcloud config list
+          gcloud container clusters describe k8s-gke --region asia-northeast3 --project kdt2-final-project-t2
+
+      - name: Terraform Init
+        run: terraform -chdir=${{ env.TF_DIR }} init
+
+      - name: Terraform Apply
+        run: terraform -chdir=${{ env.TF_DIR }} apply -auto-approve
