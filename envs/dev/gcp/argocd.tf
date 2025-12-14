@@ -1,3 +1,8 @@
+resource "google_compute_global_address" "argocd_ip" {
+  name    = "argocd-ip"
+  project = local.project_id
+}
+
 resource "helm_release" "argocd" {
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
@@ -5,29 +10,14 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 
-  values = [yamlencode({
-    server = {
-      extraArgs = ["--insecure"]
-      service   = { type = "ClusterIP" }
-      ingress = {
-        enabled          = true
-        ingressClassName = "gce"
-        annotations = {
-          "kubernetes.io/ingress.class" = "gce"
-        }
-
-        # 도메인 없으면 임시 host로 두고, LB IP 뜬 다음 테스트해도 됨
-        hosts    = [var.argocd_host]
-        paths    = ["/"]
-        pathType = "Prefix"
-      }
-    }
+  values = [templatefile("${path.module}/values/argocd-values.yaml", {
+    static_ip_name = google_compute_global_address.argocd_ip.name
+    host           = local.argocd_host
   })]
 
-  depends_on = [helm_release.external_secrets] # 운영상 편의: ESO 먼저
-}
 
-variable "argocd_host" {
-  type    = string
-  default = "argocd.example.local"
+  depends_on = [
+    helm_release.external_secrets,
+    google_compute_global_address.argocd_ip
+  ]
 }

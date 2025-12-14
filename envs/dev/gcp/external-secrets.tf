@@ -22,6 +22,6 @@ resource "helm_release" "external_secrets" {
 
   set {
     name  = "serviceAccount.annotations.iam\\.gke\\.io/gcp-service-account"
-    value = data.terraform_remote_state.gcp_env.outputs.gke_workload_sa_email
+    value = local.eso_gsa_email
   }
 }

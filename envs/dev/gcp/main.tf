@@ -27,6 +27,7 @@ locals {
   region        = data.terraform_remote_state.gcp_env.outputs.region
   cluster_name  = data.terraform_remote_state.gcp_env.outputs.cluster_name
   eso_gsa_email = data.terraform_remote_state.gcp_env.outputs.gke_workload_sa_email
+  argocd_host   = "argocd.${google_compute_global_address.argocd_ip.address}.nip.io"
 }
 
 provider "google" {
