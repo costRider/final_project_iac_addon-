@@ -8,9 +8,9 @@ mgmt EC2에서 Terraform + Helm으로 다음 컴포넌트를 관리하기 위한
 -   ArgoCD
 
 [![Build Status](https://github.com/costRider/final_project_iac_addon-/actions/workflows/eks-mgmt-addons.yaml/badge.svg)](https://github.com/costRider/final_project_iac_addon-/actions/workflows/eks-mgmt-addons.yml)
-[![Build Status](https://github.com/costRider/final_project_iac_addon-/actions/workflows/destroy-addons.yml/badge.svg)](https://github.com/costRider/final_project_iac_addon-/actions/workflows/destroy-addons.yml)
+[![Build Status](https://github.com/costRider/final_project_iac_addon-/actions/workflows/eks-destroy-addons.yml/badge.svg)](https://github.com/costRider/final_project_iac_addon-/actions/workflows/eks-destroy-addons.yml)
 [![Build Status](https://github.com/costRider/final_project_iac_addon-/actions/workflows/gke-mgmt-addons.yaml/badge.svg)](https://github.com/costRider/final_project_iac_addon-/actions/workflows/gke-mgmt-addons.yml)
-
+[![Build Status](https://github.com/costRider/final_project_iac_addon-/actions/workflows/gke-destroy-addons.yml/badge.svg)](https://github.com/costRider/final_project_iac_addon-/actions/workflows/gke-destroy-addons.yml)
 ------------------------------------------------------------------------
 
 ## 📌 레포 구조 (Repository Tree)
