@@ -10,7 +10,7 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  TF_DIR: envs/dev
+  TF_DIR: envs/dev/aws
 
 jobs:
   deploy-addons:
